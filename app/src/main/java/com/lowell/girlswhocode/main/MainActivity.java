@@ -1,4 +1,4 @@
-package com.lowell.girlswhocode;
+package com.lowell.girlswhocode.main;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,12 +6,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.lowell.girlswhocode.api.Survey;
+import com.lowell.girlswhocode.R;
+import com.lowell.girlswhocode.api.survey.Survey;
 
 import org.apache.commons.io.IOUtils;
 
-import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.survey_list_view)
     RecyclerView surveyListView;
+
+    // TODO: Add a create survey button and navigate to create-survey view
 
     SurveyAdapter surveyAdapter;
 

@@ -1,4 +1,4 @@
-package com.lowell.girlswhocode.api;
+package com.lowell.girlswhocode.api.survey;
 
 import java.util.ArrayList;
 import java.util.List;

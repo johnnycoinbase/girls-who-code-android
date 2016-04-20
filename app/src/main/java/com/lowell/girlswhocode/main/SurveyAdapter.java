@@ -1,4 +1,4 @@
-package com.lowell.girlswhocode;
+package com.lowell.girlswhocode.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,8 +15,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.lowell.girlswhocode.api.Response;
-import com.lowell.girlswhocode.api.Survey;
+import com.google.gson.Gson;
+import com.lowell.girlswhocode.R;
+import com.lowell.girlswhocode.api.survey.Survey;
 
 import java.util.List;
 
@@ -54,6 +55,9 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.ViewHolder
             Survey survey = mSurveys.get(position);
 
             Intent intent = new Intent(mContext, SurveyActivity.class);
+            Gson gson = new Gson();
+            intent.putExtra(SurveyActivity.SURVEYS, gson.toJson(survey));
+
             mContext.startActivity(intent);
         }
     }
@@ -99,6 +103,8 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.ViewHolder
                 viewHolder.userImageView.setImageDrawable(circularBitmapDrawable);
             }
         });
+
+        viewHolder.itemView.setOnClickListener(viewHolder);
     }
 
     @Override
