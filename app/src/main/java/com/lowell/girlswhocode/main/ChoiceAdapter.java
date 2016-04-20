@@ -9,8 +9,14 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.lowell.girlswhocode.R;
-import com.lowell.girlswhocode.api.survey.Response;
-import com.lowell.girlswhocode.api.survey.Survey;
+import com.lowell.girlswhocode.api.survey.Record;
+import com.lowell.girlswhocode.api.votes.Vote;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,9 +25,25 @@ import butterknife.ButterKnife;
  * Created by johnnychan on 4/19/16.
  */
 public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ViewHolder> {
+    private static final String UNSELECTED = "UNSELECTED";
 
     Context mContext;
-    Survey mSurvey;
+    Record mSurvey;
+    Vote mVote;
+    ArrayList<Choice> mChoices = new ArrayList<>();
+    String selectedChoiceName = UNSELECTED;
+
+    private class Choice {
+        int id;
+        String name;
+        int count;
+
+        public Choice(int id, String name) {
+            this.id = id;
+            this.name = name;
+            this.count = 0;
+        }
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         Context mContext;
@@ -42,33 +64,44 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ViewHolder
 
         @Override
         public void onClick(View view) {
-            int position = getLayoutPosition();
-
             if (checkBox.isChecked()) {
                 checkBox.setChecked(false);
-                mSurvey.getResponses().get(position).setSelected(false);
+                selectedChoiceName = UNSELECTED;
             } else {
                 checkBox.setChecked(true);
-                mSurvey.getResponses().get(position).setSelected(true);
-                clearAll(position);
+                selectedChoiceName = tvChoice.getText().toString();
             }
+
+            notifyDataSetChanged();
         }
     }
 
-    public ChoiceAdapter(Context context, Survey survey) {
+    public ChoiceAdapter(Context context, Record survey, Vote vote) {
         mContext = context;
         mSurvey = survey;
-    }
+        mVote = vote;
 
-    private void clearAll(int skipPosition) {
-        for (int i = 0; i < mSurvey.getResponses().size(); ++i) {
-            if (i == skipPosition)
-                continue;
-            Response response = mSurvey.getResponses().get(i);
-            response.setSelected(false);
+        // Filter choices based on current survey id.
+        ArrayList<Choice> tmpAl = new ArrayList<>();
+        HashMap<String, Choice> tmpHm = new HashMap<>();
+        for (com.lowell.girlswhocode.api.votes.Record voteRecord : vote.getRecords()) {
+            Choice choice = new Choice(voteRecord.getFields().getId(), voteRecord.getFields().getVote());
+            if (voteRecord.getFields().getSurveyId() == survey.getFields().getId()) {
+                tmpAl.add(choice);
+                tmpHm.put(voteRecord.getFields().getVote(), choice);
+            }
         }
 
-        notifyDataSetChanged();
+        // tmpAl contains all choices for this survey, use that to tally up votes.
+        for (Choice tmpChoice : tmpAl) {
+            Choice choice = tmpHm.get(tmpChoice.name);
+            choice.count++;
+            tmpHm.put(choice.name, choice);
+        }
+
+        // Store tally'ed up choices in array.
+        mChoices.clear();
+        mChoices.addAll(tmpHm.values());
     }
 
     @Override
@@ -83,14 +116,11 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ChoiceAdapter.ViewHolder viewHolder, int position) {
-        Response response = mSurvey.getResponses().get(position);
+        Choice choice = mChoices.get(position);
 
-        viewHolder.tvChoice.setText(response.getChoice());
+        viewHolder.tvChoice.setText(choice.name);
 
-        boolean isSelected = false;
-        if (response.getSelected() != null)
-            isSelected = response.getSelected();
-
+        boolean isSelected = selectedChoiceName.equalsIgnoreCase(choice.name);
         viewHolder.checkBox.setChecked(isSelected);
 
         viewHolder.itemView.setOnClickListener(viewHolder);
@@ -98,6 +128,6 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return mSurvey.getResponses().size();
+        return mChoices.size();
     }
 }

@@ -4,8 +4,10 @@ package com.lowell.girlswhocode.api;
  * Created by johnnychan on 4/19/16.
  */
 public class ApiConstants {
-    public static final String BASE_URL_PRODUCTION = "http://api.toshiapp.com";
+    public static final String BASE_URL_PRODUCTION = "https://api.airtable.com/v0/appL60O2VDIQQWHUv/";
+    public static final String API_KEY_PARAM = "api_key";
+    public static final String API_KEY = "keyw3cdZFi8RFVwH8";
 
     public static final String SURVEYS = "surveys";
-    public static final String CREATE_SURVEY = "create-survey";
+    public static final String VOTES = "votes";
 }

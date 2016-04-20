@@ -1,4 +1,4 @@
-package com.lowell.girlswhocode.api.survey;
+package com.lowell.girlswhocode.api.votes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @Generated("org.jsonschema2pojo")
-public class Survey {
+public class Vote {
 
     @SerializedName("records")
     @Expose

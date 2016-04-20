@@ -7,10 +7,16 @@ import android.support.v7.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.lowell.girlswhocode.R;
+import com.lowell.girlswhocode.api.RestClient;
+import com.lowell.girlswhocode.api.survey.Record;
 import com.lowell.girlswhocode.api.survey.Survey;
+import com.lowell.girlswhocode.api.votes.Vote;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class SurveyActivity extends AppCompatActivity {
     public static final String SURVEYS = "SURVEYS";
@@ -35,11 +41,26 @@ public class SurveyActivity extends AppCompatActivity {
         String strObj = extras.getString(SURVEYS);
 
         Gson gson = new Gson();
-        Survey survey = gson.fromJson(strObj, Survey.class);
+        final Record survey = gson.fromJson(strObj, Record.class);
 
-        choiceAdapter = new ChoiceAdapter(this, survey);
-        rvChoices.setAdapter(choiceAdapter);
-        rvChoices.setLayoutManager(new LinearLayoutManager(this));
+        RestClient.getInstance().getVotes(new Callback<Vote>() {
+            @Override
+            public void onResponse(Response<Vote> response, Retrofit retrofit) {
+                if (!response.isSuccess()) {
+                    Utils.showMessage(SurveyActivity.this, "getVotes error");
+                    return;
+                }
+
+                choiceAdapter = new ChoiceAdapter(SurveyActivity.this, survey, response.body());
+                rvChoices.setAdapter(choiceAdapter);
+                rvChoices.setLayoutManager(new LinearLayoutManager(SurveyActivity.this));
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
     }
 
 }

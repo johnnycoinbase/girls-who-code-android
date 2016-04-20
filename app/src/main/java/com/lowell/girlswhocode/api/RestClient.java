@@ -2,8 +2,10 @@ package com.lowell.girlswhocode.api;
 
 import com.google.gson.GsonBuilder;
 import com.lowell.girlswhocode.api.survey.Survey;
+import com.lowell.girlswhocode.api.votes.Vote;
 import com.squareup.okhttp.OkHttpClient;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import retrofit.Call;
@@ -51,11 +53,61 @@ public class RestClient {
     }
 
     public Call getSurveys(final Callback<Survey> callback) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put(ApiConstants.API_KEY_PARAM, ApiConstants.API_KEY);
+
         ApiInterface apiInterface = getApiService();
-        Call call = apiInterface.getSurveys();
+        Call call = apiInterface.getSurveys(params);
         call.enqueue(new Callback<Survey>() {
             @Override
             public void onResponse(retrofit.Response<Survey> response, Retrofit retrofit) {
+                if (callback != null)
+                    callback.onResponse(response, retrofit);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                if (callback != null)
+                    callback.onFailure(t);
+            }
+        });
+
+        return call;
+    }
+
+    public Call getVotes(final Callback<Vote> callback) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put(ApiConstants.API_KEY_PARAM, ApiConstants.API_KEY);
+
+        ApiInterface apiInterface = getApiService();
+        Call call = apiInterface.getVotes(params);
+        call.enqueue(new Callback<Vote>() {
+            @Override
+            public void onResponse(retrofit.Response<Vote> response, Retrofit retrofit) {
+                if (callback != null)
+                    callback.onResponse(response, retrofit);
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                if (callback != null)
+                    callback.onFailure(t);
+            }
+        });
+
+        return call;
+    }
+
+    public Call castVote(final Callback<Vote> callback) {
+        // TODO: make sure this works as intended
+        HashMap<String, Object> params = new HashMap<>();
+        params.put(ApiConstants.API_KEY_PARAM, ApiConstants.API_KEY);
+
+        ApiInterface apiInterface = getApiService();
+        Call call = apiInterface.castVote(params);
+        call.enqueue(new Callback<Vote>() {
+            @Override
+            public void onResponse(retrofit.Response<Vote> response, Retrofit retrofit) {
                 if (callback != null)
                     callback.onResponse(response, retrofit);
             }

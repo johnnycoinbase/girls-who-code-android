@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.google.gson.Gson;
 import com.lowell.girlswhocode.R;
+import com.lowell.girlswhocode.api.survey.Record;
 import com.lowell.girlswhocode.api.survey.Survey;
 
 import java.util.List;
@@ -29,7 +30,7 @@ import butterknife.ButterKnife;
  */
 public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.ViewHolder> {
     private Context mContext;
-    List<Survey> mSurveys;
+    Survey mSurvey;
     RoundedBitmapDrawable placeholderDrawable;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -52,7 +53,7 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.ViewHolder
         @Override
         public void onClick(View view) {
             int position = getLayoutPosition();
-            Survey survey = mSurveys.get(position);
+            Record survey = mSurvey.getRecords().get(position);
 
             Intent intent = new Intent(mContext, SurveyActivity.class);
             Gson gson = new Gson();
@@ -62,9 +63,9 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.ViewHolder
         }
     }
 
-    public SurveyAdapter(Context context, List<Survey> surveys) {
+    public SurveyAdapter(Context context, Survey survey) {
         mContext = context;
-        mSurveys = surveys;
+        mSurvey = survey;
 
         Bitmap resource = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.user_profile_empty);
@@ -84,9 +85,9 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final SurveyAdapter.ViewHolder viewHolder, int position) {
-        Survey survey = mSurveys.get(position);
+        Record survey = mSurvey.getRecords().get(position);
 
-        viewHolder.surveyTitleTv.setText(survey.getSurveyQuestion());
+        viewHolder.surveyTitleTv.setText(survey.getFields().getQuestion());
 
         String profileURL = null;
 //        if (survey.getProfileUrl() != null) {
@@ -109,6 +110,6 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return mSurveys.size();
+        return mSurvey.getRecords().size();
     }
 }
