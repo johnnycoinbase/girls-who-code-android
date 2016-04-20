@@ -9,26 +9,47 @@ import com.google.gson.annotations.SerializedName;
 @Generated("org.jsonschema2pojo")
 public class Survey {
 
-    @SerializedName("results")
+    @SerializedName("survey_question")
     @Expose
-    private List<Result> results = new ArrayList<Result>();
+    private String surveyQuestion;
+    @SerializedName("responses")
+    @Expose
+    private List<Response> responses = new ArrayList<Response>();
 
     /**
      *
      * @return
-     * The results
+     * The surveyQuestion
      */
-    public List<Result> getResults() {
-        return results;
+    public String getSurveyQuestion() {
+        return surveyQuestion;
     }
 
     /**
      *
-     * @param results
-     * The results
+     * @param surveyQuestion
+     * The survey_question
      */
-    public void setResults(List<Result> results) {
-        this.results = results;
+    public void setSurveyQuestion(String surveyQuestion) {
+        this.surveyQuestion = surveyQuestion;
+    }
+
+    /**
+     *
+     * @return
+     * The responses
+     */
+    public List<Response> getResponses() {
+        return responses;
+    }
+
+    /**
+     *
+     * @param responses
+     * The responses
+     */
+    public void setResponses(List<Response> responses) {
+        this.responses = responses;
     }
 
 }

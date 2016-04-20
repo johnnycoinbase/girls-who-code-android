@@ -1,40 +1,40 @@
-{
-  "results": [
-    {
-      "id": "56f5b2448660c00003c27fee",
-      "created_at": "2016-03-25T21:48:52.271Z",
-      "updated_at": "2016-03-25T21:48:52.271Z",
-      "title": "Money",
-      "question": "How do you feel about wealthy people?",
-      "submitted_by": "Anonymous",
-      "profile_url": "http://images.mid-day.com/images/2014/jun/Kal-Penn.jpg"
-    },
-    {
-      "id": "56f5b2448660c00003c27fef",
-      "created_at": "2016-03-26T21:48:52.271Z",
-      "updated_at": "2016-03-26T21:48:52.271Z",
-      "title": "Racism",
-      "question": "How do you feel about racist people?",
-      "submitted_by": "Anonymous",
-      "profile_url": null
-    },
-    {
-      "id": "56f5b2448660c00003c27feg",
-      "created_at": "2016-03-27T21:48:52.271Z",
-      "updated_at": "2016-03-27T21:48:52.271Z",
-      "title": "Gender",
-      "question": "How do you feel about transgender people?",
-      "submitted_by": "Anonymous",
-      "profile_url": null
-    },
-    {
-      "id": "56f5b2448660c00003c27feh",
-      "created_at": "2016-03-28T21:48:52.271Z",
-      "updated_at": "2016-03-28T21:48:52.271Z",
-      "title": "Dating",
-      "question": "How do you feel about dating people?",
-      "submitted_by": "Anonymous",
-      "profile_url": null
-    }
-  ]
-}
+[
+  {
+    "survey_question": "How do you feel about racist people?",
+    "responses": [
+      {
+        "choice" : "I like them",
+        "tally" : 1
+      },
+      {
+        "choice" : "I don't like them",
+        "tally" : 10
+      },
+      {
+        "choice" : "I'm not comfortable answering this",
+        "tally" : 10
+      }
+    ]
+  },
+  {
+    "survey_question": "What's your favorite color?",
+    "responses": [
+      {
+        "choice" : "White",
+        "tally" : 5
+      },
+      {
+        "choice" : "Yellow",
+        "tally" : 3
+      },
+      {
+        "choice" : "Black",
+        "tally" : 7
+      },
+      {
+        "choice" : "Brown",
+        "tally" : 11
+      }
+    ]
+  }
+]

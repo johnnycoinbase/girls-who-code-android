@@ -15,7 +15,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.lowell.girlswhocode.api.Result;
+import com.lowell.girlswhocode.api.Response;
+import com.lowell.girlswhocode.api.Survey;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ import butterknife.ButterKnife;
  */
 public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.ViewHolder> {
     private Context mContext;
-    List<Result> mSurveys;
+    List<Survey> mSurveys;
     RoundedBitmapDrawable placeholderDrawable;
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -50,14 +51,14 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.ViewHolder
         @Override
         public void onClick(View view) {
             int position = getLayoutPosition();
-            Result survey = mSurveys.get(position);
+            Survey survey = mSurveys.get(position);
 
             Intent intent = new Intent(mContext, SurveyActivity.class);
             mContext.startActivity(intent);
         }
     }
 
-    public SurveyAdapter(Context context, List<Result> surveys) {
+    public SurveyAdapter(Context context, List<Survey> surveys) {
         mContext = context;
         mSurveys = surveys;
 
@@ -79,14 +80,14 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final SurveyAdapter.ViewHolder viewHolder, int position) {
-        Result survey = mSurveys.get(position);
+        Survey survey = mSurveys.get(position);
 
-        viewHolder.surveyTitleTv.setText(survey.getTitle());
+        viewHolder.surveyTitleTv.setText(survey.getSurveyQuestion());
 
         String profileURL = null;
-        if (survey.getProfileUrl() != null) {
-            profileURL = survey.getProfileUrl();
-        }
+//        if (survey.getProfileUrl() != null) {
+//            profileURL = survey.getProfileUrl();
+//        }
 
         Glide.with(mContext).load(profileURL).asBitmap().centerCrop()
                 .placeholder(placeholderDrawable).into(new BitmapImageViewTarget(viewHolder.userImageView) {
