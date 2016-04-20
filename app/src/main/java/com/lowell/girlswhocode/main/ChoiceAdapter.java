@@ -54,6 +54,8 @@ public class ChoiceAdapter extends RecyclerView.Adapter<ChoiceAdapter.ViewHolder
         @Bind(R.id.tvChoice)
         TextView tvChoice;
 
+        // TODO: Show vote count
+
         public ViewHolder(Context context, View view) {
             super(view);
 

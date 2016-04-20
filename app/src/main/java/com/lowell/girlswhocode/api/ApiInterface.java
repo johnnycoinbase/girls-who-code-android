@@ -6,6 +6,7 @@ import com.lowell.girlswhocode.api.votes.Vote;
 import java.util.HashMap;
 
 import retrofit.Call;
+import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.QueryMap;
@@ -21,5 +22,5 @@ public interface ApiInterface {
     Call<Vote> getVotes(@QueryMap HashMap<String, Object> params);
 
     @POST(ApiConstants.VOTES)
-    Call<Vote> castVote(HashMap<String, Object> params);
+    Call<Vote> castVote(@QueryMap HashMap<String, Object> params, @Body HashMap<String, Object> body);
 }

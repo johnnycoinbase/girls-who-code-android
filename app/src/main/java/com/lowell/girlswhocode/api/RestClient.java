@@ -98,13 +98,18 @@ public class RestClient {
         return call;
     }
 
-    public Call castVote(final Callback<Vote> callback) {
-        // TODO: make sure this works as intended
+    public Call castVote(int surveyId, String choiceName, final Callback<Vote> callback) {
         HashMap<String, Object> params = new HashMap<>();
         params.put(ApiConstants.API_KEY_PARAM, ApiConstants.API_KEY);
 
+        HashMap<String, Object> body = new HashMap<>();
+        HashMap<String, Object> fields = new HashMap<>();
+        fields.put(ApiConstants.SURVEY_ID, surveyId);
+        fields.put(ApiConstants.VOTE, choiceName);
+        body.put(ApiConstants.FIELDS, fields);
+
         ApiInterface apiInterface = getApiService();
-        Call call = apiInterface.castVote(params);
+        Call call = apiInterface.castVote(params, body);
         call.enqueue(new Callback<Vote>() {
             @Override
             public void onResponse(retrofit.Response<Vote> response, Retrofit retrofit) {
